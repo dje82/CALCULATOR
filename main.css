@@ -1,3 +1,11 @@
+/* Polices */
+
+@font-face{
+    font-family: PermanentMarker;
+    src: url(fonts/PermanentMarker-Regular.ttf);
+    font-weight: 300;
+}
+
 
 body {
     background: rgb(58,58,58);
@@ -12,4 +20,85 @@ h1{
     padding: 10px 10px 10px 10px;
     margin: 20px 50px;
     background-color:grey;
+}
+
+#label-it{
+    border-radius: 10px;
+    padding: 5px;
+    margin-left: 40px;
+    font-family: PermanentMarker, sans-serif;
+    font-size: large;
+    font-weight: bold;
+}
+.calculator{
+    border: 5px solid wheat;
+    border-radius: 10px;
+    box-shadow: 15px 5px black;
+    height: auto;
+    width: 300px;
+    margin: auto;
+    margin-top: 25px;
+}
+
+#label{
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: auto;
+    padding-top: 2px;
+}
+
+#label-name{
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: PermanentMarker, sans-serif;
+    font-size: x-large;
+    color: black;
+}
+
+.result {
+    border: 2px solid white;
+    border-radius: 10px;
+    margin: 10px;
+    height: 55px;
+}
+
+.result p{
+    font-family: 'Terminal', sans-serif;    
+    font-size: xx-large;
+    color: white;
+    margin: 10px;
+    text-align: right;
+}
+
+.calc-touch{
+    height: 250px;
+    width: 295px;
+    margin: 5px auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.touch, .touchnum{
+    border: 1px solid  grey;
+    border-radius: 5px;
+    margin: 1px;
+    font-size: x-large;
+    width: 24%;
+}
+
+.touch{
+    background:LightGray;
+}
+
+
+.touch:hover, .touchnum:hover  {
+    background-color:silver
+}
+
+.touch:active, .touchnum:active{
+    outline-style:none;
+    background-color: grey;
 }

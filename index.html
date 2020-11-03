@@ -7,10 +7,46 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-<h1>Welcome to my Calculator</h1>
+<h1>Welcome to Calculator</h1>
 
-<button></button>
+<h2>Keep it safe !!!!!<button id="label-it">Label it</button></h2>
 
-<script src="./calculator.js"></script>
+
+<div class="calculator">
+    <div class="label" id = "label">
+    </div>
+    <div class="result">
+        <p id="screen-result"></p>
+    </div>
+    <div class="calc-touch">
+        <button class ="touch" id='touch?' value='' >?</button>
+        <button class ="touch" id='touch??' value=''>??</button>
+        <button class ="touch" id='touchC' value=''>C</button>
+        <button class ="touch" id='touch/' value='/'>/</button>
+
+        <button class ="touchnum" id='touch7' value='7'>7</button>
+        <button class ="touchnum" id='touch8' value='8'>8</button>
+        <button class ="touchnum" id='touch9' value='9'>9</button>
+        <button class ="touch" id='touch*' value='*'>*</button>
+        
+        <button class ="touchnum" id='touch4' value='4'>4</button>
+        <button class ="touchnum" id='touch5' value='5'>5</button>
+        <button class ="touchnum" id='touch6' value='6'>6</button>
+        <button class ="touch" id='touch-' value='-'>-</button>
+
+        <button class ="touchnum" id='touch1' value='1'>1</button>
+        <button class ="touchnum" id='touch2' value='2'>2</button>
+        <button class ="touchnum" id='touch3' value='3'>3</button>
+        <button class ="touch" id='touch+' value='+'>+</button>
+        
+        <button class ="touch" id='touch???' value=>???</button>
+        <button class ="touchnum" id='touch,' value=','>,</button>
+        <button class ="touchnum" id='touch0' value='0'>0</button>
+        <button class ="touch" id='touch=' value='='>=</button>
+    </div>
+</div>
+
+<script src="/calculator.js"></script>
+<script src="/label.js"></script>
 </body>
 </html>
