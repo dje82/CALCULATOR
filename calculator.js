@@ -1,5 +1,6 @@
-/// Populate calculator screen with touchnum
+var result;
 
+/// Populate calculator screen with touchnum
 let touchValue = document.getElementsByClassName("touchnum");
 for(let i = 0; i < touchValue.length; i++) {
     touchId = touchValue[i].getAttribute("id")
@@ -7,56 +8,128 @@ for(let i = 0; i < touchValue.length; i++) {
 };
 
 function populateResult(idTouch){
-    let screenValue = document.getElementById("screen-result");
-    screen.innerHTML+=idTouch.target.value;
-};
-
-function populateCalculResult(result){
-    console.log('helle')
-    let screenValue = document.getElementById("screen-result");
-    screen.innerHTML=result;
+        let screenValue = document.getElementById("screen-result");
+        return currentValue = screenValue.innerHTML+=idTouch.target.value;
 };
 
 
-//ADD Touch
-let clearAdd = document.getElementById("touch+")
-clearAdd.addEventListener("click", add)
+//// Operators touch eventListener
+let operatorValue = document.getElementsByClassName("touchop");
+for(let i = 0; i < operatorValue.length; i++) {
+    operatorValue[i].addEventListener("click", storeFirstValue)
+};
 
-function add(e){
-    let lastScreenValue = e.path[2].children[1].innerText
-    clear()
-    let currentScreenValue = e.path[2].children[1].innerText
-    calcul(lastScreenValue, currentScreenValue, 'addition')
+
+function storeFirstValue(e){
+    firstValue = currentValue;
+    currentOperator = e.target.value;
+    clearScreenResult()
+    populateOperationLine()        
+    return firstValue, currentOperator;
 }
 
-function calcul(a, b, op) {
-    var calcul = 0;
-    if(op == 'addition'){
-        calcul = a +b;
+
+///// Math functions
+function operate(op, a, b){
+    switch (op) {
+        case '+' : add(parseInt(a), parseInt(b));
+            break;
+        case '-' : subtract(parseInt(a), parseInt(b));
+            break;
+        case '*' : multiply(parseInt(a), parseInt(b));
+            break;
+        case '/' : divide(parseInt(a), parseInt(b));
+            break;
     }
-    populateCalculResult(calcul)
 }
 
 
-
-function subtract(){
-    
+function add(a,b){
+    result = a + b
+    return result;
 }
 
-function multiply(){
-
+function subtract(a,b){
+    result = a - b;
+    return result;
 }
 
-function divide(){
-
+function multiply(a,b){
+    result = a * b;
+    return result;
 }
 
+function divide(a,b){
+    if(b===0) {
+        result = 'ERROR DIVIDE BY 0';
+        return result
+    }
+    result = a / b;  
+    return result;
+}
+
+//display result of operate
+
+let resultTouch = document.getElementById("touch=");
+resultTouch.addEventListener("click", displayResult);
+
+
+function displayResult(){
+    operate(currentOperator, firstValue, currentValue);
+    screenResult = document.getElementById("screen-result");
+    screenResult.innerHTML = result;
+    operationLine.innerHTML += currentValue + ' ='
+    currentOperator ='';
+}
+
+//display operation in last-operate
+
+function populateOperationLine(){
+    operationLine = document.getElementById("last-operate");
+    operationLine.innerHTML = firstValue + ' ' + currentOperator + ' '
+}
+
+
+//Back Touch
+let backTouch = document.getElementById("touchBack");
+backTouch.addEventListener("click", deleteLast);
+
+function deleteLast(){
+    screenResult = document.getElementById("screen-result");
+    str = screenResult.innerHTML
+    newStr = str.slice(0, -1)
+    screenResult.innerHTML = newStr
+    currentValue=newStr
+}
 
 //CLEAR TOUCH
 let clearTouch = document.getElementById("touchC");
-clearTouch.addEventListener("click", clear);
+clearTouch.addEventListener("click", clearAll);
 
-function clear(){
-    screen = document.getElementById("screen-result");
-    screen.innerHTML='';
-};
+function clearAll(){
+    screenResult = document.getElementById("screen-result");
+    screenResult.innerHTML='';
+    currentValue= '';
+
+    operationLine = document.getElementById("last-operate");
+    operationLine.innerHTML = ' ';
+}
+
+//CLEAR screen-result only
+
+function clearScreenResult(){
+    screenResult = document.getElementById("screen-result");
+    screenResult.innerHTML=''
+    currentValue= '';
+}
+
+/// KEYBOARD
+
+    //ESC Touche = C
+    toucheEsc = document.addEventListener("keyup", keyboard)
+
+    function keyboard(e){
+        if(e.key == 'Escape'){
+            clearAll()
+        }
+    }

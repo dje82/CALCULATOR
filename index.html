@@ -5,42 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="main.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QC5T4SWV9Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QC5T4SWV9Z');
+</script>
 </head>
 <body>
 <h1>Welcome to Calculator</h1>
 
-<h2>Keep it safe !!!!!<button id="label-it">Label it</button></h2>
+<h2>Keep it safe !!!!!<button id="label-it">Label it</button><button id="unknow">Anonymous</button></h2>
 
 
 <div class="calculator">
     <div class="label" id = "label">
     </div>
     <div class="result">
+        <p id="last-operate"></p>
         <p id="screen-result"></p>
     </div>
     <div class="calc-touch">
-        <button class ="touch" id='touch?' value='' >?</button>
-        <button class ="touch" id='touch??' value=''>??</button>
+        <button class ="touch" id='touch%' value='' >%</button>
+        <button class ="touch" id='touchBack' value='back'><=</button>
         <button class ="touch" id='touchC' value=''>C</button>
-        <button class ="touch" id='touch/' value='/'>/</button>
+        <button class ="touchop" id='touch/' value='/'>÷</button>
 
         <button class ="touchnum" id='touch7' value='7'>7</button>
         <button class ="touchnum" id='touch8' value='8'>8</button>
         <button class ="touchnum" id='touch9' value='9'>9</button>
-        <button class ="touch" id='touch*' value='*'>*</button>
+        <button class ="touchop" id='touch*' value='*'>×</button>
         
         <button class ="touchnum" id='touch4' value='4'>4</button>
         <button class ="touchnum" id='touch5' value='5'>5</button>
         <button class ="touchnum" id='touch6' value='6'>6</button>
-        <button class ="touch" id='touch-' value='-'>-</button>
+        <button class ="touchop" id='touch-' value='-'>-</button>
 
         <button class ="touchnum" id='touch1' value='1'>1</button>
         <button class ="touchnum" id='touch2' value='2'>2</button>
         <button class ="touchnum" id='touch3' value='3'>3</button>
-        <button class ="touch" id='touch+' value='+'>+</button>
+        <button class ="touchop" id='touch+' value='+'>+</button>
         
-        <button class ="touch" id='touch???' value=>???</button>
-        <button class ="touchnum" id='touch,' value=','>,</button>
+        <button class ="touch" id='touch±' value=>±</button>
+        <button class ="touchnum" id='touch.' value=','>.</button>
         <button class ="touchnum" id='touch0' value='0'>0</button>
         <button class ="touch" id='touch=' value='='>=</button>
     </div>
