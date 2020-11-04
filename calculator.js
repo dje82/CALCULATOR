@@ -1,4 +1,5 @@
 var result;
+var power = false;
 
 /// Populate calculator screen with touchnum
 let touchValue = document.getElementsByClassName("touchnum");
@@ -8,8 +9,15 @@ for(let i = 0; i < touchValue.length; i++) {
 };
 
 function populateResult(idTouch){
+    if(typeof result == "undefined") {
         let screenValue = document.getElementById("screen-result");
         return currentValue = screenValue.innerHTML+=idTouch.target.value;
+    } else {
+        clearAll()
+        let screenValue = document.getElementById("screen-result");
+        return currentValue = screenValue.innerHTML+=idTouch.target.value;
+    }
+    
 };
 
 
@@ -21,11 +29,31 @@ for(let i = 0; i < operatorValue.length; i++) {
 
 
 function storeFirstValue(e){
-    firstValue = currentValue;
-    currentOperator = e.target.value;
-    clearScreenResult()
-    populateOperationLine()        
-    return firstValue, currentOperator;
+    if (typeof result === 'undefined') {
+        firstValue = currentValue;
+        currentOperator = e.target.value;
+        clearScreenResult()
+        populateOperationLine()        
+        return firstValue, currentOperator;
+    } else {
+        firstValue = result
+        currentOperator = e.target.value;
+        clearScreenResult()
+        populateOperationLine()        
+        return firstValue, currentOperator;
+    }
+
+}
+
+// touch± 
+
+document.getElementById("touch±").addEventListener("click", negative)
+
+function negative(){
+    let screenValue = document.getElementById("screen-result");
+    num = parseInt(screenValue.innerHTML) * -1
+    screenValue.innerHTML = num
+    return currentValue = num;
 }
 
 
@@ -68,6 +96,8 @@ function divide(a,b){
     return result;
 }
 
+
+
 //display result of operate
 
 let resultTouch = document.getElementById("touch=");
@@ -87,6 +117,25 @@ function displayResult(){
 function populateOperationLine(){
     operationLine = document.getElementById("last-operate");
     operationLine.innerHTML = firstValue + ' ' + currentOperator + ' '
+}
+
+//powerON 
+    ///tofinish
+let powerTouch = document.getElementById("touchON");
+powerTouch.addEventListener("click", powerOn);
+
+function powerOn(){
+    if(power == false) {
+        powerTouch.innerHTML = "On";
+        powerTouch.classList.replace("PowerOFF", "PowerON");
+        power = true;
+    } else if(power == true) {
+        powerTouch.innerHTML = "Off";
+        powerTouch.classList.replace("PowerON", "PowerOFF");
+        clearAll()
+        power = false;
+    }
+
 }
 
 
@@ -113,6 +162,8 @@ function clearAll(){
 
     operationLine = document.getElementById("last-operate");
     operationLine.innerHTML = ' ';
+
+    result = undefined;
 }
 
 //CLEAR screen-result only
@@ -124,9 +175,7 @@ function clearScreenResult(){
 }
 
 /// KEYBOARD
-
-    //ESC Touche = C
-    toucheEsc = document.addEventListener("keyup", keyboard)
+    document.addEventListener("keyup", keyboard)
 
     function keyboard(e){
         if(e.key == 'Escape'){
