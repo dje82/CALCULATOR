@@ -10,8 +10,12 @@ buttonUnknow.addEventListener("click", cleanLabel)
 
 
 function labelit(){
-if (labelOn === false) {
-        let userName = prompt('What\'s your name please ?')  
+    let username='';
+    if (labelOn === false) {
+        do {
+            userName = prompt('What\'s your name please (8max please) ?')      
+        } while (userName.length >8);
+
         label = document.getElementById("label")
         //add label
         var imgHtmlAdd = document.createElement("img")

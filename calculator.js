@@ -1,23 +1,31 @@
-var result;
+var currentValue, firstValue, result, currentOperator
 var power = false;
 
 /// Populate calculator screen with touchnum
-let touchValue = document.getElementsByClassName("touchnum");
+var touchValue = document.getElementsByClassName("touchnum");
 for(let i = 0; i < touchValue.length; i++) {
     touchId = touchValue[i].getAttribute("id")
     touchValue[i].addEventListener("click", populateResult) 
 };
 
 function populateResult(idTouch){
-    if(typeof result == "undefined") {
-        let screenValue = document.getElementById("screen-result");
-        return currentValue = screenValue.innerHTML+=idTouch.target.value;
-    } else {
-        clearAll()
-        let screenValue = document.getElementById("screen-result");
-        return currentValue = screenValue.innerHTML+=idTouch.target.value;
+    if(checkPowerOn()){
+        if(idTouch.target.value === "." && currentValue.includes(".")){
+            return
+        }
+        if(typeof result == "undefined") {
+            let screenValue = document.getElementById("screen-result");
+            currentValue = screenValue.innerHTML+=idTouch.target.value;
+            currentValue = currentValue;
+            return currentValue;
+        } else {
+            clearAll()
+            let screenValue = document.getElementById("screen-result");
+            currentValue = screenValue.innerHTML+=idTouch.target.value;
+            currentValue=currentValue;
+            return currentValue;
+        }
     }
-    
 };
 
 
@@ -25,24 +33,57 @@ function populateResult(idTouch){
 let operatorValue = document.getElementsByClassName("touchop");
 for(let i = 0; i < operatorValue.length; i++) {
     operatorValue[i].addEventListener("click", storeFirstValue)
-};
+}
 
 
 function storeFirstValue(e){
-    if (typeof result === 'undefined') {
-        firstValue = currentValue;
-        currentOperator = e.target.value;
-        clearScreenResult()
-        populateOperationLine()        
-        return firstValue, currentOperator;
-    } else {
-        firstValue = result
-        currentOperator = e.target.value;
-        clearScreenResult()
-        populateOperationLine()        
-        return firstValue, currentOperator;
+    if(checkPowerOn()) {
+        if(typeof result !== 'undefined' && typeof currentOperator === 'undefined'){
+            firstValue = result;
+            currentOperator = e.target.value;
+            clearScreenResult()
+            currentValue = undefined
+            result = undefined
+            populateOperationLine();
+        } else if (typeof firstValue !== 'undefined' && currentValue !== 'undefined') {
+            displayResult();
+            firstValue = result;
+            currentOperator = e.target.value;
+            clearScreenResult()
+            result = undefined
+            currentValue = undefined
+            populateOperationLine();
+        } else if(typeof currentValue !== 'undefined') {
+            firstValue = currentValue;
+            currentValue = undefined
+            currentOperator = e.target.value;
+            clearScreenResult();
+            populateOperationLine();
+            return firstValue, currentOperator;        
+        }
     }
+};
 
+//display result of operate
+
+let resultTouch = document.getElementById("touch=");
+resultTouch.addEventListener("click", displayResult);
+
+
+function displayResult(){
+    if(checkPowerOn()){
+        if(typeof result === 'undefined' && typeof firstValue ==='undefined' ){
+            return
+        } else if (typeof result === 'undefined') {
+            operate(currentOperator, parseFloat(firstValue), parseFloat(currentValue));
+            screenResult = document.getElementById("screen-result");
+            screenResult.innerHTML = result;
+            operationLine.innerHTML += currentValue + ' = ';
+            currentOperator = undefined;    
+        } else{
+            clearAll();
+        }
+    }
 }
 
 // touch± 
@@ -50,23 +91,25 @@ function storeFirstValue(e){
 document.getElementById("touch±").addEventListener("click", negative)
 
 function negative(){
-    let screenValue = document.getElementById("screen-result");
-    num = parseInt(screenValue.innerHTML) * -1
-    screenValue.innerHTML = num
-    return currentValue = num;
+    if(checkPowerOn()){
+        let screenValue = document.getElementById("screen-result");
+        num = screenValue.innerHTML * -1
+        screenValue.innerHTML = num
+        return currentValue = num;
+    }
 }
 
 
 ///// Math functions
 function operate(op, a, b){
     switch (op) {
-        case '+' : add(parseInt(a), parseInt(b));
+        case '+' : add(a, b);
             break;
-        case '-' : subtract(parseInt(a), parseInt(b));
+        case '-' : subtract(a, b);
             break;
-        case '*' : multiply(parseInt(a), parseInt(b));
+        case '*' : multiply(a, b);
             break;
-        case '/' : divide(parseInt(a), parseInt(b));
+        case '/' : divide(a, b);
             break;
     }
 }
@@ -89,55 +132,31 @@ function multiply(a,b){
 
 function divide(a,b){
     if(b===0) {
-        result = 'ERROR DIVIDE BY 0';
+        result = 'Error divide by 0';
         return result
     }
     result = a / b;  
     return result;
 }
 
-
-
-//display result of operate
-
-let resultTouch = document.getElementById("touch=");
-resultTouch.addEventListener("click", displayResult);
-
-
-function displayResult(){
-    operate(currentOperator, firstValue, currentValue);
-    screenResult = document.getElementById("screen-result");
-    screenResult.innerHTML = result;
-    operationLine.innerHTML += currentValue + ' ='
-    currentOperator ='';
-}
-
 //display operation in last-operate
 
 function populateOperationLine(){
     operationLine = document.getElementById("last-operate");
-    operationLine.innerHTML = firstValue + ' ' + currentOperator + ' '
-}
-
-//powerON 
-    ///tofinish
-let powerTouch = document.getElementById("touchON");
-powerTouch.addEventListener("click", powerOn);
-
-function powerOn(){
-    if(power == false) {
-        powerTouch.innerHTML = "On";
-        powerTouch.classList.replace("PowerOFF", "PowerON");
-        power = true;
-    } else if(power == true) {
-        powerTouch.innerHTML = "Off";
-        powerTouch.classList.replace("PowerON", "PowerOFF");
-        clearAll()
-        power = false;
+    if(currentValue === undefined) {
+        operationLine.innerHTML = firstValue + ' ' + currentOperator + ' '
+    } else{
+        operationLine.innerHTML = firstValue + ' ' + currentOperator + ' ' + currentValue
     }
-
+    
 }
 
+//CLEAR screen-result only
+
+function clearScreenResult(){
+    screenResult = document.getElementById("screen-result");
+    screenResult.innerHTML=''
+}
 
 //Back Touch
 let backTouch = document.getElementById("touchBack");
@@ -147,8 +166,12 @@ function deleteLast(){
     screenResult = document.getElementById("screen-result");
     str = screenResult.innerHTML
     newStr = str.slice(0, -1)
+        if (newStr === ''){
+            currentValue = undefined   
+        } else {
+            currentValue=newStr
+        }
     screenResult.innerHTML = newStr
-    currentValue=newStr
 }
 
 //CLEAR TOUCH
@@ -156,29 +179,23 @@ let clearTouch = document.getElementById("touchC");
 clearTouch.addEventListener("click", clearAll);
 
 function clearAll(){
-    screenResult = document.getElementById("screen-result");
-    screenResult.innerHTML='';
-    currentValue= '';
-
+    clearScreenResult()
     operationLine = document.getElementById("last-operate");
     operationLine.innerHTML = ' ';
-
-    result = undefined;
+    currentValue = undefined;
+    firstValue = undefined;
+    result = undefined
+    currentOperator = undefined;
 }
 
-//CLEAR screen-result only
+// //Case  decimal exist
+// let DecimalTouch = document.getElementById("touch.");
+// DecimalTouch.addEventListener("click", checkDecimal);
 
-function clearScreenResult(){
-    screenResult = document.getElementById("screen-result");
-    screenResult.innerHTML=''
-    currentValue= '';
-}
-
-/// KEYBOARD
-    document.addEventListener("keyup", keyboard)
-
-    function keyboard(e){
-        if(e.key == 'Escape'){
-            clearAll()
-        }
-    }
+// function checkDecimal(){
+//     if(currentValue %1 === 0) {
+//         DecimalTouch.disabled = false
+//     } else {
+//         DecimalTouch.disabled = true
+//     }
+// }

@@ -90,7 +90,7 @@ h1{
     flex-wrap: wrap;
 }
 
-.touch, .touchnum, .touchop{
+.touch, .touchnum, .touchop, .touchPower{
     border: 1px solid  grey;
     border-radius: 5px;
     margin: 1px;
