@@ -46,16 +46,20 @@ h1{
     display: block;
     margin: auto;
     padding-top: 2px;
+    z-index: 1;
+    position: relative;
 }
 
 #label-name{
-    position: absolute;
-    top: 33%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(0%, -150%);
     font-family: PermanentMarker, sans-serif;
     font-size: x-large;
     color: black;
+    position: relative;
+    z-index: 2;
+    margin: auto;
+    text-align: center;
+
 }
 
 .result {
