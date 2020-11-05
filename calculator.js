@@ -10,7 +10,7 @@ for(let i = 0; i < touchValue.length; i++) {
 
 function populateResult(idTouch){
     if(checkPowerOn()){
-        if(idTouch.target.value === "." && currentValue.includes(".")){
+        if(idTouch.target.value === "." && currentValue.toString().includes(".")){
             return
         }
         if(typeof result == "undefined") {
@@ -93,9 +93,13 @@ document.getElementById("touch±").addEventListener("click", negative)
 function negative(){
     if(checkPowerOn()){
         let screenValue = document.getElementById("screen-result");
-        num = screenValue.innerHTML * -1
-        screenValue.innerHTML = num
-        return currentValue = num;
+        if(typeof currentValue === 'undefined' ){
+            return;
+        } else{
+            num = screenValue.innerHTML * -1
+            screenValue.innerHTML = num
+            return currentValue = num;
+        }
     }
 }
 
@@ -187,15 +191,3 @@ function clearAll(){
     result = undefined
     currentOperator = undefined;
 }
-
-// //Case  decimal exist
-// let DecimalTouch = document.getElementById("touch.");
-// DecimalTouch.addEventListener("click", checkDecimal);
-
-// function checkDecimal(){
-//     if(currentValue %1 === 0) {
-//         DecimalTouch.disabled = false
-//     } else {
-//         DecimalTouch.disabled = true
-//     }
-// }
