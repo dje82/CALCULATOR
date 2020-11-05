@@ -19,7 +19,7 @@ function labelit(){
         label = document.getElementById("label")
         //add label
         var imgHtmlAdd = document.createElement("img")
-        imgHtmlAdd.setAttribute("src","/img/label.jpg" )
+        imgHtmlAdd.setAttribute("src","img/label.jpg" )
         imgHtmlAdd.setAttribute("alt", "label")
         imgHtmlAdd.setAttribute("id", "label")
         label.appendChild(imgHtmlAdd)
